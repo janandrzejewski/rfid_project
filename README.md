@@ -26,7 +26,7 @@ The RC522 module with all pin headers soldered, ready for connection to the micr
 <img src="img/rc522_after_soldering_top.jpeg" alt="RC522 module after soldering" width="500">
 
 ## TODO:
-- [ ] simple blinker
+- [ ] Write simple sketch Blink
 - [ ] Connect the RC522 module to the microcontroller
 - [ ] Run a communication test sketch
 - [ ] Write code to detect a card and read its UID
