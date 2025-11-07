@@ -38,5 +38,7 @@ void print_uid(void)
   {
     Serial.print(mfrc522.uid.uidByte[i], HEX);
   }
-  Serial.print("\n"); 
+  int piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
+  Serial.print("\nPICC type: ");
+  Serial.println(mfrc522.PICC_GetTypeName(piccType));
 }
