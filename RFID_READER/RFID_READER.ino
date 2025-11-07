@@ -31,14 +31,14 @@ void loop(void)
 
 void print_uid(void)
 {
-  int i = 0;
-  int size = mfrc522.uid.size;
+  byte i = 0;
+  byte size = mfrc522.uid.size;
   Serial.print("Card id: ");
   for (i = 0; i < size; i++)
   {
     Serial.print(mfrc522.uid.uidByte[i], HEX);
   }
-  int piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
+  byte piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
   Serial.print("\nPICC type: ");
   Serial.println(mfrc522.PICC_GetTypeName(piccType));
 }
