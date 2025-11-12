@@ -96,7 +96,11 @@ void print_one_block(byte blockToRead)
   if (status == MFRC522::STATUS_OK)
   {
     Serial.print("Block ");
-    print_hex(blockToRead);
+    if (blockToRead < 10)
+    {
+      Serial.print("0");
+    }
+    Serial.print(blockToRead);
     Serial.print(": ");
     for (byte i = 0; i < 16; i++)
     {
