@@ -7,6 +7,7 @@
 void print_uid(void);
 bool authenticate_card(byte sectorToAuth);
 void print_one_block(byte BlockToRead);
+void dump_card(void);
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
@@ -28,6 +29,11 @@ void loop(void)
     return;
   }
 
+  dump_card();
+}
+
+void dump_card(void)
+{
   print_uid();
   for (byte block = 0; block < 64; block++)
   {
