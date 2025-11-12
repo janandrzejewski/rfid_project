@@ -7,6 +7,7 @@
 void print_uid(void);
 bool authenticate_card(byte sectorToAuth);
 void print_one_block(byte BlockToRead);
+static void print_hex(byte hex);
 void dump_card(void);
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
@@ -58,7 +59,7 @@ void print_uid(void)
   Serial.print("Card id: ");
   for (i = 0; i < size; i++)
   {
-    Serial.print(mfrc522.uid.uidByte[i], HEX);
+    print_hex(mfrc522.uid.uidByte[i]);
   }
   byte piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
   Serial.print("\nPICC type: ");
@@ -95,22 +96,22 @@ void print_one_block(byte blockToRead)
   if (status == MFRC522::STATUS_OK)
   {
     Serial.print("Block ");
-    if (blockToRead < 10)
-    {
-      Serial.print("0");
-    }
-    Serial.print(blockToRead);
+    print_hex(blockToRead);
     Serial.print(": ");
     for (byte i = 0; i < 16; i++)
     {
-      if (buffer[i] < 0x10)
-      {
-        Serial.print("0");
-      }
-      Serial.print(buffer[i], HEX);
+      print_hex(buffer[i]);
       Serial.print(" ");
       
     }
     Serial.print("\n");
   }
+}
+static void print_hex(byte hex)
+{
+  if (hex < 0x10)
+  {
+      Serial.print("0");
+  }
+  Serial.print(hex, HEX);
 }
