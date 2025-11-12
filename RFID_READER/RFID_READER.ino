@@ -5,6 +5,7 @@
 #define SS_PIN 10
 
 void print_uid(void);
+void authenticate_card(void);
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
@@ -27,6 +28,8 @@ void loop(void)
   }
 
   print_uid();
+  authenticate_card();
+  mfrc522.PCD_StopCrypto1();
 }
 
 void print_uid(void)
@@ -41,4 +44,24 @@ void print_uid(void)
   byte piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
   Serial.print("\nPICC type: ");
   Serial.println(mfrc522.PICC_GetTypeName(piccType));
+}
+
+void authenticate_card(void)
+{
+  MFRC522::MIFARE_Key key;
+  byte i;
+  for (i = 0; i < 6; i++)
+  {
+    key.keyByte[i] = 0xFF;
+  }
+  byte trailerBlock = 7;
+  byte status;
+
+  status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &key, &(mfrc522.uid));
+  if (status != MFRC522::STATUS_OK)
+  {
+  Serial.print("PCD_Authenticate() failed: ");
+  Serial.println(mfrc522.GetStatusCodeName(status));
+  return;
+  }
 }
