@@ -6,6 +6,7 @@
 
 void print_uid(void);
 bool authenticate_card(byte sectorToAuth);
+void print_one_block(byte BlockToRead);
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
@@ -28,7 +29,19 @@ void loop(void)
   }
 
   print_uid();
-  bool auth_status = authenticate_card(1);
+  for (byte block = 0; block < 64; block++)
+  {
+    byte sector = block / 4;
+    bool auth_status = authenticate_card(sector);
+    if (auth_status)
+    {
+      print_one_block(block);
+    }
+    else
+    {
+      break;
+    }
+  }
   mfrc522.PCD_StopCrypto1();
 }
 
@@ -66,4 +79,32 @@ bool authenticate_card(byte sectorToAuth)
   }
 
   return true;
+}
+
+void print_one_block(byte blockToRead)
+{
+  byte buffer[18];
+  byte bufferSize = sizeof(buffer);
+  byte status = mfrc522.MIFARE_Read(blockToRead, buffer, &bufferSize);
+  if (status == MFRC522::STATUS_OK)
+  {
+    Serial.print("Block ");
+    if (blockToRead < 10)
+    {
+      Serial.print("0");
+    }
+    Serial.print(blockToRead);
+    Serial.print(": ");
+    for (byte i = 0; i < 16; i++)
+    {
+      if (buffer[i] < 0x10)
+      {
+        Serial.print("0");
+      }
+      Serial.print(buffer[i], HEX);
+      Serial.print(" ");
+      
+    }
+    Serial.print("\n");
+  }
 }
