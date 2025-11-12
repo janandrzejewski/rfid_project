@@ -10,6 +10,10 @@ The goal of this task is to read a bite message from RFID card using RC522 modul
 - [x] Connect the RC522 module to the microcontroller
 - [x] Run a communication test sketch
 - [x] Write code to detect a card and read its UID
+- [x] Write code to read a single data block
+- [x] Refactor authentication logic to be modular (by sector)
+- [x] Implement function to read and print all 64 blocks (full card dump)
+- [x] Refactor card dump logic into a dedicated `dump_card()` function
 
 ## Hardware Assembly
 Here's a visual walkthrough of the RC522 module assembly process.
@@ -34,3 +38,5 @@ The RC522 module with all pin headers soldered, ready for connection to the micr
 
 
 ## TODO:
+- [ ] Implement function to write data to a block
+- [ ] Store a specific message on the card and read it back
