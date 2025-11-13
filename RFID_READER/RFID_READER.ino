@@ -80,9 +80,9 @@ bool authenticate_card(byte sectorToAuth)
   status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &key, &(mfrc522.uid));
   if (status != MFRC522::STATUS_OK)
   {
-  Serial.print("PCD_Authenticate() failed: ");
-  Serial.println(mfrc522.GetStatusCodeName(status));
-  return false;
+    Serial.print("PCD_Authenticate() failed: ");
+    Serial.println(mfrc522.GetStatusCodeName(status));
+    return false;
   }
 
   return true;
@@ -106,7 +106,6 @@ void print_one_block(byte blockToRead)
     {
       print_hex(buffer[i]);
       Serial.print(" ");
-      
     }
     Serial.print("\n");
   }
