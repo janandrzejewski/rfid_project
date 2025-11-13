@@ -81,7 +81,7 @@ bool authenticate_card(byte sectorToAuth)
   if (status != MFRC522::STATUS_OK)
   {
   Serial.print("PCD_Authenticate() failed: ");
-  Serial.print(mfrc522.GetStatusCodeName(status));
+  Serial.println(mfrc522.GetStatusCodeName(status));
   return false;
   }
 
